@@ -939,6 +939,7 @@ class SpiderManager {
   }
   
   spawnSpider() {
+    console.log('SpiderManager: spawnSpider called (will create spiders)');
     const count = probability(0.1) ? randomInt(2, 5) : 1;
     
     // Mark event as active while spiders are crawling
@@ -1110,8 +1111,9 @@ class HauntedWeb {
     this.startIntensityScaling();
     this.startSafetyChecks();
     this.initialized = true;
-    
-    console.log('Haunted Web: Initialized', this.settings);
+
+    // Debug: log settings so it's easy to verify spiders/ghost toggles
+    try { console.log('Haunted Web: Initialized', this.settings); } catch (e) {}
   }
   async getSettings(){ return new Promise((resolve)=>{ try { chrome.runtime.sendMessage({ type: MSG.GET_SETTINGS }, (res)=>{ if(res&&res.success) resolve(res.settings); else resolve(DEFAULTS); }); } catch(e){ resolve(DEFAULTS); } }); }
   isLoginPage(){ return !!(document.querySelector('input[type="password"]') || document.querySelector('form[action*="login" i], form[action*="signin" i]')); }
@@ -1132,8 +1134,41 @@ class HauntedWeb {
   setupMessageListener(){ try { chrome.runtime.onMessage.addListener((req)=>{ switch(req.type){ case MSG.UPDATE_SETTINGS: this.settings={...this.settings,...req.settings}; this.updateFromSettings(); break; case MSG.PANIC: this.panic(); break; case MSG.ENABLE: this.settings.enabled=true; this.start(); break; case MSG.DISABLE: this.settings.enabled=false; this.stop(); break; } }); } catch(e){} }
   updateFromSettings(){ if(this.audio){ this.audio.setVolume(this.settings.audioVolume); if(this.settings.audio && !this.audio.droneOscillator) this.audio.startDrone(); else if(!this.settings.audio && this.audio.droneOscillator) this.audio.stopDrone(); }
     if(this.settings.enabled && !this.enabled) this.start(); else if(!this.settings.enabled && this.enabled) this.stop(); else if(this.enabled){ this.ghostManager.updateSettings(this.settings); this.spiderManager.updateSettings(this.settings); this.corruptionManager.updateSettings(this.settings); this.environmentManager.updateSettings(this.settings); } }
+
+  // Debug helper to spawn a spider manually from the console
+  debugSpawnSpider() {
+    try {
+      if (this.spiderManager && typeof this.spiderManager.spawnSpider === 'function') {
+        this.spiderManager.spawnSpider();
+        console.log('Haunted Web: debugSpawnSpider invoked');
+        return true;
+      }
+    } catch (e) {
+      console.error('debugSpawnSpider error', e);
+    }
+    return false;
+  }
   destroy(){ if(this.intensityTimer) clearInterval(this.intensityTimer); if(this.safetyCheckTimer) clearInterval(this.safetyCheckTimer); this.stop(); this.cleanup(); if(this.audio) this.audio.destroy(); }
 }
 
 // Initialize
-if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', ()=>{ new HauntedWeb().init(); }); } else { new HauntedWeb().init(); }
+// Initialize and expose instance for debugging/inspection
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      window.hauntedWeb = new HauntedWeb();
+      window.hauntedWeb.init();
+      console.log('Haunted Web instance attached to window.hauntedWeb');
+    } catch (e) {
+      console.error('Failed to initialize HauntedWeb instance', e);
+    }
+  });
+} else {
+  try {
+    window.hauntedWeb = new HauntedWeb();
+    window.hauntedWeb.init();
+    console.log('Haunted Web instance attached to window.hauntedWeb');
+  } catch (e) {
+    console.error('Failed to initialize HauntedWeb instance', e);
+  }
+}
