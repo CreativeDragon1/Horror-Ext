@@ -1,0 +1,11 @@
+{
+  "name": "haunted-web",
+  "version": "1.0.0",
+  "description": "A horror browser extension that makes every website terrifying",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": ["browser-extension", "horror", "halloween", "effects"],
+  "author": "",
+  "license": "MIT"
+}

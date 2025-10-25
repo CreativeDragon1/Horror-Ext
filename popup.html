@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haunted Web Control Panel</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="haunted-panel">
+    <!-- Header -->
+    <div class="panel-header">
+      <h1 class="panel-title">
+        <span class="title-icon" aria-hidden="true"></span>
+        HAUNTED WEB
+        <span class="title-icon" aria-hidden="true"></span>
+      </h1>
+      <div class="panel-subtitle">CONTROL PANEL</div>
+    </div>
+
+    <!-- Panic Button -->
+    <button class="panic-button" id="panicBtn">
+      <span class="panic-icon" aria-hidden="true"></span>
+      PANIC - DISABLE ALL
+      <span class="panic-icon" aria-hidden="true"></span>
+    </button>
+
+    <!-- Master Toggle -->
+    <div class="control-group">
+      <div class="toggle-control">
+        <label class="toggle-label">
+          <input type="checkbox" id="masterToggle" checked>
+          <span class="toggle-slider"></span>
+          <span class="toggle-text">Extension Enabled</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Feature Toggles -->
+    <div class="section">
+      <h2 class="section-title">HORROR EFFECTS</h2>
+      
+      <div class="toggle-grid">
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="ghostsToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Ghosts</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="spidersToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Spiders</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="fogToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Fog</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="glitchesToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Glitches</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="corruptionToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Corruption</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="shadowsToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Shadows</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="bloodToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Blood</span>
+          </label>
+        </div>
+
+        <div class="toggle-control">
+          <label class="toggle-label">
+            <input type="checkbox" id="audioToggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Audio</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intensity Controls -->
+    <div class="section">
+      <h2 class="section-title">INTENSITY CONTROLS</h2>
+      
+      <div class="slider-control">
+        <label class="slider-label">
+          <span>Overall Intensity</span>
+          <span class="slider-value" id="intensityValue">50%</span>
+        </label>
+        <input type="range" class="slider" id="intensitySlider" min="0" max="100" value="50">
+      </div>
+
+      <div class="slider-control">
+        <label class="slider-label">
+          <span>Ghost Frequency</span>
+          <span class="slider-value" id="ghostFreqValue">30%</span>
+        </label>
+        <input type="range" class="slider" id="ghostFreqSlider" min="0" max="100" value="30">
+      </div>
+
+      <div class="slider-control">
+        <label class="slider-label">
+          <span>Spider Frequency</span>
+          <span class="slider-value" id="spiderFreqValue">20%</span>
+        </label>
+        <input type="range" class="slider" id="spiderFreqSlider" min="0" max="100" value="20">
+      </div>
+
+      <div class="slider-control">
+        <label class="slider-label">
+          <span>Distortion Frequency</span>
+          <span class="slider-value" id="distortionFreqValue">40%</span>
+        </label>
+        <input type="range" class="slider" id="distortionFreqSlider" min="0" max="100" value="40">
+      </div>
+
+      <div class="slider-control">
+        <label class="slider-label">
+          <span>Audio Volume</span>
+          <span class="slider-value" id="audioVolumeValue">50%</span>
+        </label>
+        <input type="range" class="slider" id="audioVolumeSlider" min="0" max="100" value="50">
+      </div>
+    </div>
+
+    <!-- Special Options -->
+    <div class="section">
+      <h2 class="section-title">SPECIAL OPTIONS</h2>
+      
+      <div class="toggle-control">
+        <label class="toggle-label">
+          <input type="checkbox" id="nightModeToggle" checked>
+          <span class="toggle-slider"></span>
+          <span class="toggle-text">Night Mode Aggression (7PM+)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Whitelist -->
+    <div class="section">
+      <h2 class="section-title">SAFE SITES (WHITELIST)</h2>
+      <div class="whitelist-info">Effects disabled on these sites</div>
+      <div class="site-list" id="whitelistContainer">
+        <div class="no-sites">No sites added</div>
+      </div>
+      <div class="add-site">
+        <input type="text" id="whitelistInput" placeholder="example.com">
+        <button id="addWhitelistBtn" class="add-btn">Add Site</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="panel-footer">
+      <div class="version">v1.0.0</div>
+      <div class="warning">⚠ Auto-disabled on banking, gov, healthcare sites</div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

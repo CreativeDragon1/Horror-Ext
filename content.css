@@ -1,0 +1,438 @@
+/* Haunted Web - Content Styles */
+
+/* ============================================
+   GHOST STYLES
+   ============================================ */
+
+.haunted-ghost {
+  position: fixed;
+  width: 150px;
+  height: 200px;
+  pointer-events: none;
+  z-index: 2147483647;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 20px rgba(200, 200, 255, 0.5));
+}
+
+.haunted-ghost canvas {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes haunted-ghost-teleport {
+  0% { opacity: 0; transform: scale(0); filter: blur(10px); }
+  100% { opacity: 0.9; transform: scale(1); filter: blur(0); }
+}
+
+@keyframes haunted-ghost-teleport-out {
+  0% { opacity: 0.9; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(0); filter: blur(10px); }
+}
+
+@keyframes haunted-ghost-peek {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+}
+
+@keyframes haunted-ghost-stare {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 0.9; transform: scale(1); }
+}
+
+/* ============================================
+   SPIDER STYLES
+   ============================================ */
+
+.haunted-spider {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  pointer-events: all;
+  z-index: 2147483647;
+  cursor: pointer;
+}
+
+.spider-body {
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.spider-leg {
+  position: absolute;
+  width: 2px;
+  height: 25px;
+  background: #000;
+  transform-origin: top center;
+}
+
+.spider-leg-1 { left: 5px; top: 10px; transform: rotate(-60deg); animation: spider-leg-walk-1 0.6s infinite; }
+.spider-leg-2 { left: 10px; top: 15px; transform: rotate(-30deg); animation: spider-leg-walk-2 0.6s infinite; }
+.spider-leg-3 { left: 10px; top: 25px; transform: rotate(30deg); animation: spider-leg-walk-1 0.6s infinite; }
+.spider-leg-4 { left: 5px; top: 30px; transform: rotate(60deg); animation: spider-leg-walk-2 0.6s infinite; }
+.spider-leg-5 { right: 5px; top: 10px; transform: rotate(60deg); animation: spider-leg-walk-2 0.6s infinite; }
+.spider-leg-6 { right: 10px; top: 15px; transform: rotate(30deg); animation: spider-leg-walk-1 0.6s infinite; }
+.spider-leg-7 { right: 10px; top: 25px; transform: rotate(-30deg); animation: spider-leg-walk-2 0.6s infinite; }
+.spider-leg-8 { right: 5px; top: 30px; transform: rotate(-60deg); animation: spider-leg-walk-1 0.6s infinite; }
+
+.leg-segment {
+  width: 100%;
+  height: 50%;
+  background: #000;
+}
+
+.segment-1 {
+  border-radius: 2px 2px 0 0;
+}
+
+.segment-2 {
+  transform: rotate(-20deg);
+  transform-origin: top center;
+}
+
+@keyframes spider-leg-walk-1 {
+  0%, 100% { transform: rotate(var(--base-angle, 0deg)); }
+  50% { transform: rotate(calc(var(--base-angle, 0deg) + 15deg)); }
+}
+
+@keyframes spider-leg-walk-2 {
+  0%, 100% { transform: rotate(var(--base-angle, 0deg)); }
+  50% { transform: rotate(calc(var(--base-angle, 0deg) - 15deg)); }
+}
+
+.spider-eye {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ff0000 0%, #8b0000 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 3px #ff0000;
+}
+
+.spider-eye-1 { left: 10px; top: 8px; }
+.spider-eye-2 { left: 16px; top: 8px; }
+
+.spider-thread {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(200, 200, 200, 0.6), rgba(200, 200, 200, 0.3));
+  transform: translateX(-50%);
+  animation: spider-thread-shimmer 2s infinite;
+}
+
+@keyframes spider-thread-shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.spider-dropping {
+  animation: none;
+}
+
+/* ============================================
+   ENVIRONMENTAL EFFECTS
+   ============================================ */
+
+.haunted-fog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2147483645;
+  opacity: 0.8;
+}
+
+.haunted-shadow {
+  position: fixed;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+  pointer-events: none;
+  z-index: 2147483644;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.shadow-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  animation-name: shadow-crawl-down;
+}
+
+.shadow-bottom {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  animation-name: shadow-crawl-up;
+}
+
+.shadow-left {
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+  animation-name: shadow-crawl-right;
+}
+
+.shadow-right {
+  right: 0;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+  animation-name: shadow-crawl-left;
+}
+
+@keyframes shadow-crawl-down {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+@keyframes shadow-crawl-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+@keyframes shadow-crawl-right {
+  0% { transform: translateX(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(0); opacity: 0; }
+}
+
+@keyframes shadow-crawl-left {
+  0% { transform: translateX(100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(0); opacity: 0; }
+}
+
+/* ============================================
+   GLITCH EFFECTS
+   ============================================ */
+
+.haunted-glitch {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2147483646;
+  mix-blend-mode: screen;
+}
+
+.glitch-rgb-split {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 0, 0, 0.1) 0px,
+    rgba(0, 255, 0, 0.1) 2px,
+    rgba(0, 0, 255, 0.1) 4px
+  );
+  animation: glitch-rgb 0.2s infinite;
+}
+
+.glitch-static {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.3"/></svg>');
+  animation: static-noise 0.1s infinite;
+}
+
+.glitch-tear {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 2px,
+    transparent 10px
+  );
+  animation: glitch-tear 0.3s ease-in-out;
+}
+
+@keyframes glitch-rgb {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(2px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes static-noise {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes glitch-tear {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(10px); }
+  50% { transform: translateX(-10px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+/* ============================================
+   BLOOD DRIPS
+   ============================================ */
+
+.haunted-blood-drip {
+  position: fixed;
+  top: -10px;
+  width: 20px;
+  height: 30px;
+  background: radial-gradient(ellipse at top, #8b0000 0%, #4a0000 100%);
+  border-radius: 0 0 50% 50%;
+  pointer-events: none;
+  z-index: 2147483646;
+  animation: blood-drip 3s ease-in forwards;
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(139, 0, 0, 0.5);
+}
+
+.haunted-blood-drip::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: #8b0000;
+  border-radius: 50%;
+}
+
+@keyframes blood-drip {
+  0% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translateY(calc(100vh + 50px)) scaleY(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(calc(100vh + 50px)) scaleY(0.5);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   SHADOW HANDS
+   ============================================ */
+
+.haunted-shadow-hand {
+  position: fixed;
+  width: 150px;
+  height: 200px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 2147483646;
+  opacity: 0;
+}
+
+.hand-left {
+  left: -75px;
+  bottom: -100px;
+  animation: shadow-hand-left 3s ease-in-out forwards;
+  clip-path: polygon(30% 0%, 40% 20%, 35% 40%, 45% 60%, 50% 80%, 55% 100%, 40% 100%, 35% 80%, 30% 60%, 25% 40%, 20% 20%, 10% 0%);
+}
+
+.hand-right {
+  right: -75px;
+  bottom: -100px;
+  animation: shadow-hand-right 3s ease-in-out forwards;
+  clip-path: polygon(70% 0%, 80% 20%, 75% 40%, 65% 60%, 60% 80%, 55% 100%, 45% 100%, 50% 80%, 55% 60%, 60% 40%, 65% 20%, 90% 0%);
+}
+
+@keyframes shadow-hand-left {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  50% { transform: translateY(-150px) translateX(50px); opacity: 0.8; }
+  100% { transform: translateY(0) translateX(0); opacity: 0; }
+}
+
+@keyframes shadow-hand-right {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  50% { transform: translateY(-150px) translateX(-50px); opacity: 0.8; }
+  100% { transform: translateY(0) translateX(0); opacity: 0; }
+}
+
+/* ============================================
+   FLICKER OVERLAY
+   ============================================ */
+
+.haunted-flicker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  pointer-events: none;
+  z-index: 2147483647;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.haunted-silhouette {
+  position: absolute;
+  background: radial-gradient(ellipse at center, rgba(50, 50, 50, 0.8) 0%, transparent 70%);
+  border-radius: 50% 50% 0 0;
+  opacity: 0.6;
+}
+
+/* ============================================
+   CORRUPTION EFFECTS
+   ============================================ */
+
+.haunted-cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2147483647;
+}
+
+/* ============================================
+   RESPONSIVE & ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .haunted-ghost,
+  .haunted-spider,
+  .haunted-shadow,
+  .haunted-glitch,
+  .haunted-blood-drip,
+  .haunted-shadow-hand {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Ensure effects don't break layouts */
+.haunted-ghost,
+.haunted-spider,
+.haunted-fog,
+.haunted-shadow,
+.haunted-glitch,
+.haunted-blood-drip,
+.haunted-shadow-hand,
+.haunted-flicker-overlay,
+.haunted-cursor-trail {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
