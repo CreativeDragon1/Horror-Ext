@@ -1,4 +1,4 @@
-# 🎃 Haunted Web Extension - Installation Guide
+# Haunted Web Extension - Installation Guide
 
 ## Quick Start
 
@@ -84,7 +84,6 @@ If your browser requires PNG icons:
 ## File Structure
 
 ```
-extension/
 ├── manifest.json          # Extension configuration
 ├── background.js          # Service worker
 ├── content-bundle.js      # Main content script (bundled)
