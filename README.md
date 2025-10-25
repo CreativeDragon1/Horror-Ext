@@ -14,7 +14,7 @@
 1. Open `chrome://extensions/`
 2. Enable "Developer mode"
 3. Click "Load unpacked"
-4. Select the `extension` folder
+4. Drop all folders
 
 ### Firefox
 1. Open `about:debugging#/runtime/this-firefox`
