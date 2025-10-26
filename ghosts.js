@@ -1,4 +1,3 @@
-// Ghost system with Canvas/CSS rendering
 import { random, randomInt, randomChoice, randomEdgePosition, randomScreenPosition, generateId, distance, ease, createElement } from './shared/utils.js';
 import { GHOST_BEHAVIORS, TIME } from './shared/constants.js';
 
@@ -21,13 +20,11 @@ export class Ghost {
   }
 
   create() {
-    // Create container
     this.element = createElement('div', ['haunted-ghost'], {
       'data-id': this.id,
       'data-behavior': this.behavior
     });
 
-    // Create canvas for ghost rendering
     this.canvas = createElement('canvas');
     this.canvas.width = 150;
     this.canvas.height = 200;
@@ -36,12 +33,10 @@ export class Ghost {
 
     this.drawGhost();
 
-    // Set initial position based on behavior
     this.setupBehavior();
 
     document.body.appendChild(this.element);
 
-    // Play audio
     if (this.audioSystem && Math.random() < 0.3) {
       this.audioSystem.playWhisper();
     }
@@ -56,18 +51,15 @@ export class Ghost {
 
     ctx.clearRect(0, 0, w, h);
 
-    // Create gradient body
     const gradient = ctx.createRadialGradient(w/2, h/3, 10, w/2, h/3, w/2);
     gradient.addColorStop(0, 'rgba(200, 200, 255, 0.8)');
     gradient.addColorStop(0.5, 'rgba(150, 150, 200, 0.4)');
     gradient.addColorStop(1, 'rgba(100, 100, 150, 0)');
 
-    // Draw body
     ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.moveTo(w/2, h/4);
     
-    // Wavy body
     for (let i = 0; i <= 10; i++) {
       const angle = Math.PI * i / 10;
       const x = w/2 + Math.cos(angle) * w/3;
@@ -75,7 +67,6 @@ export class Ghost {
       ctx.lineTo(x, y);
     }
     
-    // Wavy bottom
     const waveCount = 6;
     for (let i = 0; i <= waveCount; i++) {
       const x = w - (i * w / waveCount);
@@ -86,7 +77,6 @@ export class Ghost {
     ctx.closePath();
     ctx.fill();
 
-    // Draw glowing eyes
     const eyeGlow = ctx.createRadialGradient(w/2 - 20, h/3, 0, w/2 - 20, h/3, 15);
     eyeGlow.addColorStop(0, 'rgba(255, 100, 100, 1)');
     eyeGlow.addColorStop(1, 'rgba(255, 100, 100, 0)');
@@ -158,17 +148,14 @@ export class Ghost {
   }
 
   setupTeleport() {
-    // Appear at random position
     const pos = randomScreenPosition();
     this.x = pos.x;
     this.y = pos.y;
     this.element.style.left = this.x + 'px';
     this.element.style.top = this.y + 'px';
     
-    // Add teleport effect
     this.element.style.animation = 'haunted-ghost-teleport 0.3s ease-out';
     
-    // Teleport away after random time
     setTimeout(() => {
       this.element.style.animation = 'haunted-ghost-teleport-out 0.3s ease-in';
       setTimeout(() => this.destroy(), 300);
@@ -182,7 +169,6 @@ export class Ghost {
     this.x = pos.x;
     this.y = pos.y;
 
-    // Track cursor
     const trackCursor = (e) => {
       this.cursorX = e.clientX;
       this.cursorY = e.clientY;
@@ -199,7 +185,6 @@ export class Ghost {
   }
 
   setupPeek() {
-    // Find a large element to peek from behind
     const elements = Array.from(document.querySelectorAll('div, section, aside, nav, img'))
       .filter(el => el.offsetWidth > 100 && el.offsetHeight > 100);
     
@@ -211,7 +196,6 @@ export class Ghost {
     const hideElement = randomChoice(elements);
     const rect = hideElement.getBoundingClientRect();
     
-    // Position at edge of element
     const edge = randomChoice(['left', 'right', 'top', 'bottom']);
     const positions = {
       left: { x: rect.left - 75, y: rect.top + rect.height / 2 },
@@ -234,14 +218,12 @@ export class Ghost {
   }
 
   setupStare() {
-    // Position at center-ish of screen
     this.x = window.innerWidth / 2 + random(-200, 200);
     this.y = window.innerHeight / 2 + random(-150, 150);
     this.element.style.left = this.x + 'px';
     this.element.style.top = this.y + 'px';
     this.element.style.animation = 'haunted-ghost-stare 1s ease-out';
     
-    // Stare for duration
     setTimeout(() => {
       this.element.style.opacity = '0';
       setTimeout(() => this.destroy(), 100);
@@ -251,7 +233,6 @@ export class Ghost {
   }
 
   setupCrawl() {
-    // Start at bottom of screen
     this.x = random(100, window.innerWidth - 100);
     this.y = window.innerHeight + 200;
     this.targetY = window.innerHeight - 250;
@@ -280,7 +261,6 @@ export class Ghost {
     this.element.style.left = this.x + 'px';
     this.element.style.top = this.y + 'px';
 
-    // Redraw with animation
     if (Math.random() < 0.1) this.drawGhost();
 
     this.animationFrame = requestAnimationFrame(() => this.animate());
@@ -324,7 +304,6 @@ export class Ghost {
   }
 
   distortNearbyElements() {
-    // Find elements near the ghost
     const nearby = Array.from(document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, a'))
       .filter(el => {
         const rect = el.getBoundingClientRect();
@@ -390,7 +369,6 @@ export class GhostManager {
     ghost.create();
     this.ghosts.push(ghost);
 
-    // Clean up after ghost is done
     setTimeout(() => {
       const index = this.ghosts.indexOf(ghost);
       if (index > -1) {

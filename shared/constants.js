@@ -1,4 +1,3 @@
-// Shared constants for the extension
 export const DEFAULTS = {
   enabled: true,
   intensity: 0.5,
@@ -8,7 +7,6 @@ export const DEFAULTS = {
   audioVolume: 0.5,
   nightModeAggression: true,
   
-  // Feature toggles
   ghosts: true,
   spiders: true,
   fog: true,
@@ -18,12 +16,10 @@ export const DEFAULTS = {
   shadows: true,
   blood: true,
   
-  // Safety
   whitelist: [],
   blacklist: []
 };
 
-// Sites to auto-disable on
 export const UNSAFE_DOMAINS = [
   'bank', 'paypal', 'stripe', 'checkout', 'payment',
   'gov', 'irs', 'medicare', 'healthcare',
@@ -31,7 +27,6 @@ export const UNSAFE_DOMAINS = [
   'meet', 'zoom', 'teams', 'webex'
 ];
 
-// Messages
 export const MSG = {
   GET_SETTINGS: 'GET_SETTINGS',
   UPDATE_SETTINGS: 'UPDATE_SETTINGS',
@@ -40,7 +35,6 @@ export const MSG = {
   DISABLE: 'DISABLE'
 };
 
-// Ghost behaviors
 export const GHOST_BEHAVIORS = [
   'slide',
   'teleport',
@@ -50,7 +44,6 @@ export const GHOST_BEHAVIORS = [
   'crawl'
 ];
 
-// Time thresholds (ms)
 export const TIME = {
   GHOST_MIN: 5000,
   GHOST_MAX: 30000,
@@ -58,7 +51,7 @@ export const TIME = {
   SPIDER_MAX: 45000,
   CORRUPTION_MIN: 3000,
   CORRUPTION_MAX: 20000,
-  INTENSITY_SCALE_INTERVAL: 60000, // Scale intensity every minute
+  INTENSITY_SCALE_INTERVAL: 60000,
   STARE_DURATION: 5000,
   CRAWL_DURATION: 10000
 };

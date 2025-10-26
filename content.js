@@ -1,4 +1,3 @@
-// Main content script - orchestrates all horror effects
 import { Settings } from './shared/settings.js';
 import { UNSAFE_DOMAINS, MSG, TIME } from './shared/constants.js';
 import { isUnsafeDomain, isWhitelisted, isFullscreenOrCall, hasActiveForm, prefersReducedMotion, isNightTime } from './shared/utils.js';
@@ -27,16 +26,13 @@ class HauntedWeb {
   async init() {
     if (this.initialized) return;
 
-    // Get settings
     this.settings = await this.getSettings();
     
-    // Check if should be disabled
     if (this.shouldDisable()) {
       console.log('Haunted Web: Disabled on this site for safety');
       return;
     }
 
-    // Check reduced motion preference
     if (prefersReducedMotion()) {
       console.log('Haunted Web: Respecting reduced motion preference');
       this.settings.intensity = 0.2;
@@ -44,28 +40,22 @@ class HauntedWeb {
 
     this.intensity = this.settings.intensity;
 
-    // Initialize systems
     this.audio = new HorrorAudio();
     this.ghostManager = new GhostManager(this.audio, this.settings);
     this.spiderManager = new SpiderManager(this.audio, this.settings);
     this.corruptionManager = new CorruptionManager(this.settings);
     this.environmentManager = new EnvironmentManager(this.settings);
 
-    // Initialize audio on first user interaction
     this.initAudioOnInteraction();
 
-    // Start effects if enabled
     if (this.settings.enabled) {
       this.start();
     }
 
-    // Listen for messages
     this.setupMessageListener();
 
-    // Start intensity scaling
     this.startIntensityScaling();
 
-    // Start safety checks
     this.startSafetyChecks();
 
     this.initialized = true;
@@ -78,7 +68,6 @@ class HauntedWeb {
         if (response && response.success) {
           resolve(response.settings);
         } else {
-          // Use defaults if can't get settings
           resolve({
             enabled: true,
             intensity: 0.5,
@@ -106,12 +95,10 @@ class HauntedWeb {
   shouldDisable() {
     const url = window.location.href;
     
-    // Check if in whitelist
     if (this.settings.whitelist && isWhitelisted(url, this.settings.whitelist)) {
       return true;
     }
 
-    // Check if unsafe domain
     if (isUnsafeDomain(url, UNSAFE_DOMAINS)) {
       return true;
     }
@@ -161,7 +148,6 @@ class HauntedWeb {
     if (this.settings.corruption) this.corruptionManager.start();
     this.environmentManager.start();
 
-    // Start audio
     if (this.audio && this.audio.initialized && this.settings.audio) {
       this.audio.startDrone();
     }
@@ -183,13 +169,11 @@ class HauntedWeb {
   }
 
   cleanup() {
-    // Remove all haunted elements
     const elements = document.querySelectorAll('[class^="haunted-"], [class*=" haunted-"]');
     elements.forEach(el => {
       if (el.parentNode) el.parentNode.removeChild(el);
     });
 
-    // Reset body styles
     document.body.style.transform = '';
     document.body.style.filter = '';
   }
@@ -198,11 +182,9 @@ class HauntedWeb {
     this.intensityTimer = setInterval(() => {
       this.timeOnPage += TIME.INTENSITY_SCALE_INTERVAL;
       
-      // Gradually increase intensity (cap at 2x original)
       const scale = 1 + Math.min(this.timeOnPage / 300000, 1); // Max at 5 minutes
       this.intensity = this.settings.intensity * scale;
       
-      // Update all managers with scaled intensity
       if (this.enabled) {
         const scaledSettings = {
           ...this.settings,
@@ -219,7 +201,6 @@ class HauntedWeb {
 
   startSafetyChecks() {
     this.safetyCheckTimer = setInterval(() => {
-      // Check for fullscreen or active forms
       if (isFullscreenOrCall() || hasActiveForm()) {
         if (this.enabled) {
           this.stop();
@@ -256,7 +237,6 @@ class HauntedWeb {
   }
 
   updateFromSettings() {
-    // Update audio volume
     if (this.audio) {
       this.audio.setVolume(this.settings.audioVolume);
       if (this.settings.audio && !this.audio.droneOscillator) {
@@ -272,7 +252,6 @@ class HauntedWeb {
     } else if (!this.settings.enabled && this.enabled) {
       this.stop();
     } else if (this.enabled) {
-      // Update all managers
       if (this.ghostManager) this.ghostManager.updateSettings(this.settings);
       if (this.spiderManager) this.spiderManager.updateSettings(this.settings);
       if (this.corruptionManager) this.corruptionManager.updateSettings(this.settings);
@@ -291,7 +270,6 @@ class HauntedWeb {
   }
 }
 
-// Initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const hauntedWeb = new HauntedWeb();

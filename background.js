@@ -1,6 +1,4 @@
-// Background service worker
-
-// Constants
+ 
 const MSG = {
   GET_SETTINGS: 'GET_SETTINGS',
   UPDATE_SETTINGS: 'UPDATE_SETTINGS',
@@ -29,7 +27,6 @@ const DEFAULTS = {
   blacklist: []
 };
 
-// Settings management
 class Settings {
   static async get() {
     try {
@@ -62,7 +59,6 @@ class Settings {
   }
 }
 
-// Handle installation
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install') {
     console.log('Haunted Web installed!');
@@ -70,7 +66,6 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   }
 });
 
-// Handle messages from content scripts and popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
     try {
@@ -82,20 +77,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         
         case MSG.UPDATE_SETTINGS:
           await Settings.update(request.settings);
-          // Notify all tabs of settings change
           const tabs = await chrome.tabs.query({});
           tabs.forEach(tab => {
             chrome.tabs.sendMessage(tab.id, {
               type: MSG.UPDATE_SETTINGS,
               settings: request.settings
-            }).catch(() => {}); // Ignore errors for tabs without content script
+            }).catch(() => {});
           });
           sendResponse({ success: true });
           break;
         
         case MSG.PANIC:
           await Settings.update({ enabled: false });
-          // Notify all tabs to disable
           const allTabs = await chrome.tabs.query({});
           allTabs.forEach(tab => {
             chrome.tabs.sendMessage(tab.id, {
@@ -124,12 +117,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
   })();
   
-  return true; // Keep channel open for async response
+  return true;
 });
 
-// Listen for tab updates to check URL safety
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
-    // Could implement URL checking here if needed
   }
 });

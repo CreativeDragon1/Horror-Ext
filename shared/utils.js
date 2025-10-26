@@ -1,5 +1,3 @@
-// Utility functions
-
 export function random(min, max) {
   return Math.random() * (max - min) + min;
 }
@@ -24,31 +22,26 @@ export function lerp(a, b, t) {
   return a + (b - a) * t;
 }
 
-// Check if current time is night (after 7PM)
 export function isNightTime() {
   const hour = new Date().getHours();
   return hour >= 19 || hour < 6;
 }
 
-// Check if domain is unsafe
 export function isUnsafeDomain(url, unsafeDomains) {
   const hostname = new URL(url).hostname.toLowerCase();
   return unsafeDomains.some(domain => hostname.includes(domain));
 }
 
-// Check if site is whitelisted
 export function isWhitelisted(url, whitelist) {
   const hostname = new URL(url).hostname;
   return whitelist.some(site => hostname.includes(site));
 }
 
-// Detect if in fullscreen or video call
 export function isFullscreenOrCall() {
   return document.fullscreenElement !== null || 
          document.querySelector('video[autoplay]') !== null;
 }
 
-// Check for active form inputs
 export function hasActiveForm() {
   const activeElement = document.activeElement;
   return activeElement && (
@@ -58,17 +51,14 @@ export function hasActiveForm() {
   );
 }
 
-// Respect reduced motion preference
 export function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-// Generate unique ID
 export function generateId() {
   return `haunted-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
-// Create element with classes
 export function createElement(tag, classes = [], attributes = {}) {
   const el = document.createElement(tag);
   if (classes.length) el.className = classes.join(' ');
@@ -78,7 +68,6 @@ export function createElement(tag, classes = [], attributes = {}) {
   return el;
 }
 
-// Get random position on screen
 export function randomScreenPosition() {
   return {
     x: random(0, window.innerWidth),
@@ -86,7 +75,6 @@ export function randomScreenPosition() {
   };
 }
 
-// Get random edge position
 export function randomEdgePosition() {
   const edge = randomChoice(['top', 'right', 'bottom', 'left']);
   const positions = {
@@ -98,12 +86,10 @@ export function randomEdgePosition() {
   return { ...positions[edge], edge };
 }
 
-// Calculate distance between two points
 export function distance(x1, y1, x2, y2) {
   return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
-// Ease functions
 export const ease = {
   inQuad: t => t * t,
   outQuad: t => t * (2 - t),

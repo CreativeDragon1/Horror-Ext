@@ -1,4 +1,3 @@
-// Environmental horror effects (fog, shadows, glitches, blood, etc.)
 import { random, randomInt, randomChoice, probability, createElement } from './shared/utils.js';
 
 export class EnvironmentManager {
@@ -18,7 +17,6 @@ export class EnvironmentManager {
     if (this.settings.blood) this.scheduleBlood();
   }
 
-  // Fog effect using canvas
   startFog() {
     this.fogCanvas = createElement('canvas', ['haunted-fog']);
     this.fogCanvas.width = window.innerWidth;
@@ -26,7 +24,6 @@ export class EnvironmentManager {
     this.fogCtx = this.fogCanvas.getContext('2d');
     document.body.appendChild(this.fogCanvas);
 
-    // Create fog particles
     for (let i = 0; i < 50; i++) {
       this.fogParticles.push({
         x: random(0, window.innerWidth),
@@ -40,7 +37,6 @@ export class EnvironmentManager {
 
     this.animateFog();
 
-    // Handle window resize
     window.addEventListener('resize', () => {
       if (this.fogCanvas) {
         this.fogCanvas.width = window.innerWidth;
@@ -55,17 +51,14 @@ export class EnvironmentManager {
     this.fogCtx.clearRect(0, 0, this.fogCanvas.width, this.fogCanvas.height);
 
     this.fogParticles.forEach(particle => {
-      // Move particle
       particle.x += particle.speedX;
       particle.y += particle.speedY;
 
-      // Wrap around screen
       if (particle.x < -particle.size) particle.x = this.fogCanvas.width + particle.size;
       if (particle.x > this.fogCanvas.width + particle.size) particle.x = -particle.size;
       if (particle.y < -particle.size) particle.y = this.fogCanvas.height + particle.size;
       if (particle.y > this.fogCanvas.height + particle.size) particle.y = -particle.size;
 
-      // Draw particle
       const gradient = this.fogCtx.createRadialGradient(
         particle.x, particle.y, 0,
         particle.x, particle.y, particle.size
@@ -98,7 +91,6 @@ export class EnvironmentManager {
     this.fogParticles = [];
   }
 
-  // Crawling shadows
   scheduleShadows() {
     const spawnShadow = () => {
       if (!this.settings.enabled || !this.settings.shadows) return;
@@ -123,7 +115,6 @@ export class EnvironmentManager {
     schedule();
   }
 
-  // Glitch effects
   scheduleGlitches() {
     const glitch = () => {
       if (!this.settings.enabled || !this.settings.glitches) return;
@@ -149,7 +140,6 @@ export class EnvironmentManager {
     schedule();
   }
 
-  // Blood drips
   scheduleBlood() {
     const bloodDrip = () => {
       if (!this.settings.enabled || !this.settings.blood) return;
@@ -166,7 +156,6 @@ export class EnvironmentManager {
     };
 
     const schedule = () => {
-      // Spawn multiple drips
       const count = randomInt(1, 3);
       for (let i = 0; i < count; i++) {
         setTimeout(() => bloodDrip(), i * 500);
@@ -178,7 +167,6 @@ export class EnvironmentManager {
     schedule();
   }
 
-  // Shadow hands
   spawnShadowHands() {
     const hand1 = createElement('div', ['haunted-shadow-hand', 'hand-left']);
     const hand2 = createElement('div', ['haunted-shadow-hand', 'hand-right']);
@@ -192,11 +180,9 @@ export class EnvironmentManager {
     }, 3000);
   }
 
-  // Page flicker with silhouettes
   pageFlicker() {
     const overlay = createElement('div', ['haunted-flicker-overlay']);
     
-    // Create random silhouettes
     for (let i = 0; i < randomInt(1, 3); i++) {
       const silhouette = createElement('div', ['haunted-silhouette']);
       silhouette.style.left = random(10, 80) + '%';
@@ -208,7 +194,6 @@ export class EnvironmentManager {
     
     document.body.appendChild(overlay);
 
-    // Flicker sequence
     const flicker = [100, 300, 100, 400, 100];
     let totalTime = 0;
     
@@ -233,7 +218,6 @@ export class EnvironmentManager {
   updateSettings(settings) {
     this.settings = settings;
     
-    // Restart fog if setting changed
     if (settings.fog && !this.fogCanvas) {
       this.startFog();
     } else if (!settings.fog && this.fogCanvas) {

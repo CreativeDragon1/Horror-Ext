@@ -1,4 +1,3 @@
-// Webpage corruption effects
 import { random, randomInt, randomChoice, probability, createElement } from './shared/utils.js';
 import { TIME } from './shared/constants.js';
 
@@ -41,7 +40,6 @@ export class CorruptionManager {
   }
 
   textMutation() {
-    // Find random text elements
     const textElements = Array.from(document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, a, li'))
       .filter(el => el.textContent.trim().length > 0);
     
@@ -54,10 +52,10 @@ export class CorruptionManager {
       const originalFilter = element.style.filter;
       
       const mutations = [
-        { transform: `scaleX(-1)`, filter: 'none' }, // Reverse
-        { transform: `scaleY(1.5) scaleX(0.8)`, filter: 'none' }, // Stretch
-        { transform: `skewX(${random(-20, 20)}deg)`, filter: 'none' }, // Skew
-        { transform: `translateY(${random(5, 15)}px)`, filter: 'blur(2px)' } // Drip
+        { transform: `scaleX(-1)`, filter: 'none' },
+        { transform: `scaleY(1.5) scaleX(0.8)`, filter: 'none' },
+        { transform: `skewX(${random(-20, 20)}deg)`, filter: 'none' },
+        { transform: `translateY(${random(5, 15)}px)`, filter: 'blur(2px)' }
       ];
       
       const mutation = randomChoice(mutations);
@@ -86,7 +84,6 @@ export class CorruptionManager {
   }
 
   cursorCorruption() {
-    // Create custom cursor element
     const cursor = createElement('div', ['haunted-cursor-trail']);
     document.body.appendChild(cursor);
     

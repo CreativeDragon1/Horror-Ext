@@ -1,8 +1,4 @@
-/* Haunted Web - Content Styles */
-
-/* ============================================
-   GHOST STYLES
-   ============================================ */
+ 
 
 .haunted-ghost {
   position: fixed;
@@ -39,9 +35,7 @@
   100% { opacity: 0.9; transform: scale(1); }
 }
 
-/* ============================================
-   SPIDER STYLES
-   ============================================ */
+ 
 
 .haunted-spider {
   position: fixed;
@@ -135,9 +129,7 @@
   animation: none;
 }
 
-/* ============================================
-   ENVIRONMENTAL EFFECTS
-   ============================================ */
+ 
 
 .haunted-fog {
   position: fixed;
@@ -223,9 +215,7 @@
   100% { transform: translateX(0); opacity: 0; }
 }
 
-/* ============================================
-   GLITCH EFFECTS
-   ============================================ */
+ 
 
 .haunted-glitch {
   position: fixed;
@@ -287,9 +277,7 @@
   100% { transform: translateX(0); }
 }
 
-/* ============================================
-   BLOOD DRIPS
-   ============================================ */
+ 
 
 .haunted-blood-drip {
   position: fixed;
@@ -332,9 +320,7 @@
   }
 }
 
-/* ============================================
-   SHADOW HANDS
-   ============================================ */
+ 
 
 .haunted-shadow-hand {
   position: fixed;
@@ -372,9 +358,7 @@
   100% { transform: translateY(0) translateX(0); opacity: 0; }
 }
 
-/* ============================================
-   FLICKER OVERLAY
-   ============================================ */
+ 
 
 .haunted-flicker-overlay {
   position: fixed;
@@ -396,9 +380,7 @@
   opacity: 0.6;
 }
 
-/* ============================================
-   CORRUPTION EFFECTS
-   ============================================ */
+ 
 
 .haunted-cursor-trail {
   position: fixed;
@@ -406,9 +388,7 @@
   z-index: 2147483647;
 }
 
-/* ============================================
-   RESPONSIVE & ACCESSIBILITY
-   ============================================ */
+ 
 
 @media (prefers-reduced-motion: reduce) {
   .haunted-ghost,
@@ -422,7 +402,7 @@
   }
 }
 
-/* Ensure effects don't break layouts */
+ 
 .haunted-ghost,
 .haunted-spider,
 .haunted-fog,

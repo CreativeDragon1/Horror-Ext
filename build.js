@@ -1,4 +1,3 @@
-// Simple build script
 const fs = require('fs');
 const path = require('path');
 

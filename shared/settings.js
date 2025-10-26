@@ -1,4 +1,3 @@
-// Settings management
 import { DEFAULTS } from './constants.js';
 
 export class Settings {

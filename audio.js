@@ -1,4 +1,3 @@
-// Audio synthesis system using Web Audio API
 import { clamp } from './shared/utils.js';
 
 export class HorrorAudio {
@@ -10,7 +9,6 @@ export class HorrorAudio {
     this.droneOscillator = null;
   }
 
-  // Initialize audio context (must be called after user interaction)
   async init() {
     if (this.initialized) return;
     
@@ -32,7 +30,6 @@ export class HorrorAudio {
     }
   }
 
-  // Start ambient drone
   startDrone() {
     if (!this.initialized || this.droneOscillator) return;
 
@@ -42,9 +39,9 @@ export class HorrorAudio {
     const gain = this.context.createGain();
 
     osc1.type = 'sine';
-    osc1.frequency.value = 55; // Low A
+  osc1.frequency.value = 55;
     osc2.type = 'sine';
-    osc2.frequency.value = 58.27; // Slightly detuned for beating effect
+  osc2.frequency.value = 58.27;
 
     filter.type = 'lowpass';
     filter.frequency.value = 200;
@@ -61,7 +58,6 @@ export class HorrorAudio {
 
     this.droneOscillator = { osc1, osc2, gain, filter };
 
-    // Slowly modulate filter
     const modulate = () => {
       if (!this.droneOscillator) return;
       filter.frequency.value = 150 + Math.sin(Date.now() / 3000) * 50;
@@ -78,7 +74,6 @@ export class HorrorAudio {
     }
   }
 
-  // Whisper sound (noise burst with formants)
   playWhisper() {
     if (!this.initialized) return;
 
@@ -87,7 +82,6 @@ export class HorrorAudio {
     const buffer = this.context.createBuffer(1, bufferSize, this.context.sampleRate);
     const data = buffer.getChannelData(0);
 
-    // Generate pink noise
     let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
     for (let i = 0; i < bufferSize; i++) {
       const white = Math.random() * 2 - 1;
@@ -122,7 +116,6 @@ export class HorrorAudio {
     source.stop(this.context.currentTime + duration);
   }
 
-  // Heartbeat sound
   playHeartbeat() {
     if (!this.initialized) return;
 
@@ -148,7 +141,6 @@ export class HorrorAudio {
     beat(0.15);
   }
 
-  // Crawling sound (random ticks and scratches)
   playCrawling() {
     if (!this.initialized) return;
 
@@ -181,7 +173,6 @@ export class HorrorAudio {
     }
   }
 
-  // Random creepy sound
   playRandom() {
     const sounds = [
       () => this.playWhisper(),

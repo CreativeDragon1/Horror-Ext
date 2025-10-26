@@ -1,6 +1,4 @@
-// Popup control panel JavaScript
-
-// Constants
+ 
 const MSG = {
   GET_SETTINGS: 'GET_SETTINGS',
   UPDATE_SETTINGS: 'UPDATE_SETTINGS',
@@ -16,13 +14,10 @@ class PopupController {
   }
 
   async init() {
-    // Load current settings
     await this.loadSettings();
     
-    // Setup event listeners
     this.setupEventListeners();
     
-    // Render UI
     this.render();
   }
 
@@ -49,7 +44,6 @@ class PopupController {
   }
 
   setupEventListeners() {
-    // Panic button
     document.getElementById('panicBtn').addEventListener('click', () => {
       chrome.runtime.sendMessage({ type: MSG.PANIC });
       this.settings.enabled = false;
@@ -57,14 +51,12 @@ class PopupController {
       this.showNotification('ALL EFFECTS DISABLED!');
     });
 
-    // Master toggle
     document.getElementById('masterToggle').addEventListener('change', async (e) => {
       this.settings.enabled = e.target.checked;
       await this.saveSettings();
       this.showNotification(e.target.checked ? 'Extension Enabled' : 'Extension Disabled');
     });
 
-    // Feature toggles
     const toggles = [
       { id: 'ghostsToggle', key: 'ghosts' },
       { id: 'spidersToggle', key: 'spiders' },
@@ -84,7 +76,6 @@ class PopupController {
       });
     });
 
-    // Sliders
     const sliders = [
       { id: 'intensitySlider', valueId: 'intensityValue', key: 'intensity' },
       { id: 'ghostFreqSlider', valueId: 'ghostFreqValue', key: 'ghostFrequency' },
@@ -108,7 +99,6 @@ class PopupController {
       });
     });
 
-    // Whitelist
     document.getElementById('addWhitelistBtn').addEventListener('click', () => {
       this.addToWhitelist();
     });
@@ -214,10 +204,8 @@ class PopupController {
   }
 
   showNotification(message) {
-    // Simple notification - could be enhanced
     console.log('Notification:', message);
     
-    // Flash the panel header
     const header = document.querySelector('.panel-header');
     header.style.animation = 'none';
     setTimeout(() => {

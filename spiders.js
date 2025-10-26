@@ -1,4 +1,3 @@
-// Spider creature system with CSS rendering
 import { random, randomInt, randomChoice, randomEdgePosition, generateId, distance, createElement } from './shared/utils.js';
 import { TIME } from './shared/constants.js';
 
@@ -24,10 +23,8 @@ export class Spider {
       'data-id': this.id
     });
 
-    // Create spider body
     const body = createElement('div', ['spider-body']);
-    
-    // Create 8 legs
+
     for (let i = 0; i < 8; i++) {
       const leg = createElement('div', ['spider-leg', `spider-leg-${i + 1}`]);
       const segment1 = createElement('div', ['leg-segment', 'segment-1']);
@@ -37,7 +34,6 @@ export class Spider {
       body.appendChild(leg);
     }
 
-    // Add eyes
     const eye1 = createElement('div', ['spider-eye', 'spider-eye-1']);
     const eye2 = createElement('div', ['spider-eye', 'spider-eye-2']);
     body.appendChild(eye1);
@@ -45,15 +41,12 @@ export class Spider {
 
     this.element.appendChild(body);
 
-    // Setup behavior
     this.setupBehavior();
 
     document.body.appendChild(this.element);
 
-    // Setup hover interaction
     this.element.addEventListener('mouseenter', () => this.flee());
 
-    // Play crawling sound
     if (this.audioSystem && Math.random() < 0.5) {
       this.audioSystem.playCrawling();
     }
@@ -76,12 +69,10 @@ export class Spider {
   }
 
   setupWalk() {
-    // Start from random edge
     const startPos = randomEdgePosition();
     this.x = startPos.x;
     this.y = startPos.y;
     
-    // Walk to opposite side
     const oppositeEdges = {
       top: { x: random(0, window.innerWidth), y: window.innerHeight + 50 },
       bottom: { x: random(0, window.innerWidth), y: -50 },
@@ -97,14 +88,12 @@ export class Spider {
   }
 
   setupDrop() {
-    // Drop from top on silk thread
     this.x = random(100, window.innerWidth - 100);
     this.y = -50;
     this.targetY = random(200, 400);
     
     this.element.classList.add('spider-dropping');
     
-    // Create silk thread
     const thread = createElement('div', ['spider-thread']);
     thread.style.left = '50%';
     thread.style.top = '0';
@@ -115,21 +104,18 @@ export class Spider {
   }
 
   setupInspect() {
-    // Track cursor
     const trackCursor = (e) => {
       this.cursorX = e.clientX;
       this.cursorY = e.clientY;
     };
     document.addEventListener('mousemove', trackCursor);
 
-    // Start from random position
     const pos = randomEdgePosition();
     this.x = pos.x;
     this.y = pos.y;
 
     this.animateInspect();
 
-    // Stop after random time
     setTimeout(() => {
       document.removeEventListener('mousemove', trackCursor);
       this.destroy();
@@ -151,12 +137,10 @@ export class Spider {
       return;
     }
 
-    // Move toward target
     const angle = Math.atan2(dy, dx);
     this.x += Math.cos(angle) * this.speed;
     this.y += Math.sin(angle) * this.speed;
 
-    // Rotate spider to face direction
     const rotation = (angle * 180 / Math.PI) + 90;
     this.element.style.transform = `rotate(${rotation}deg)`;
     
@@ -183,9 +167,7 @@ export class Spider {
       if (progress < 1) {
         this.animationFrame = requestAnimationFrame(drop);
       } else {
-        // Hang for a moment
         setTimeout(() => {
-          // Climb back up
           this.animateClimbUp(thread);
         }, random(1000, 3000));
       }
@@ -221,7 +203,6 @@ export class Spider {
   animateInspect() {
     const dist = distance(this.x, this.y, this.cursorX, this.cursorY);
     
-    // Move toward cursor but maintain some distance
     if (dist > 150) {
       const angle = Math.atan2(this.cursorY - this.y, this.cursorX - this.x);
       this.x += Math.cos(angle) * this.speed;
@@ -230,7 +211,6 @@ export class Spider {
       const rotation = (angle * 180 / Math.PI) + 90;
       this.element.style.transform = `rotate(${rotation}deg)`;
     } else if (dist < 100) {
-      // Too close, back away
       const angle = Math.atan2(this.cursorY - this.y, this.cursorX - this.x);
       this.x -= Math.cos(angle) * this.speed;
       this.y -= Math.sin(angle) * this.speed;
@@ -253,7 +233,6 @@ export class Spider {
     this.fleeing = true;
     this.speed = 8;
     
-    // Run to nearest edge
     const edges = [
       { x: -100, y: this.y },
       { x: window.innerWidth + 100, y: this.y },
@@ -310,7 +289,6 @@ export class SpiderManager {
   }
 
   spawnSpider() {
-    // Rare: spawn multiple spiders
     const count = probability(0.1) ? randomInt(2, 5) : 1;
     
     for (let i = 0; i < count; i++) {

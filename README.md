@@ -28,3 +28,27 @@ This extension does not collect any data. All settings are stored locally.
 ## Technical Details
 
 All visuals are generated using CSS and Canvas/WebGL - no external images or assets.
+
+## Tech Stack
+
+- Platform: Chrome/Chromium Extensions (Manifest V3)
+- Languages: JavaScript (ES Modules), HTML, CSS
+- Content/UI:
+	- Content script orchestrator and effects: `content.js` (built into `content-bundle.js`)
+	- Popup UI: `popup.html`, `popup.css`, `popup.js`
+	- Injected styles: `content.css`
+- Background and storage:
+	- Service worker background: `background.js`
+	- Settings via `chrome.storage.sync`: `shared/settings.js`, used across popup/background/content
+- Effects systems:
+	- Ghosts (Canvas rendering): `ghosts.js`
+	- Spiders (CSS rendering): `spiders.js`
+	- Corruption (DOM distortions): `corruption.js`
+	- Environment (fog, shadows, glitches, blood): `environment.js`
+	- Audio (Web Audio API): `audio.js`
+- Shared modules: `shared/constants.js`, `shared/utils.js`
+- Build tooling: Node-based build script (e.g., `build.js`) producing `content-bundle.js`
+
+APIs and browser features:
+- Chrome Extensions API: `chrome.runtime`, `chrome.tabs`, `chrome.storage.sync`
+- Web platform: Canvas 2D, Web Audio API, DOM/CSS animations, requestAnimationFrame
